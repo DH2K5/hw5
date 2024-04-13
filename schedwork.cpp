@@ -55,10 +55,6 @@ bool schedule(
     for(size_t i = 0; i < avail.size(); i++){
         vector<Worker_T> day;
         sched.push_back(day);
-        for (size_t j = 0; j < dailyNeed; j++)
-        {
-            sched[i].push_back(0);
-        }
     }
     return scheduler(avail, dailyNeed, maxShifts, sched, days, 0, 0);
 }
@@ -77,7 +73,7 @@ bool scheduler (
         return true;
     }
     for(int i = 0; i < ((int) avail[currentDay].size()); i++){
-        sched[currentDay][currentshift] = i;
+        sched[currentDay].push_back(i);
         days[i]++;
         currentshift++;
         if((avail[currentDay][i] == 1) && (days[i] <= maxShifts)){
@@ -94,7 +90,7 @@ bool scheduler (
         }
         currentshift--;
         days[i]--;
-        sched[currentDay][currentshift] = 0;
+        sched[currentDay].pop_back();
     }
     return false;
 }
